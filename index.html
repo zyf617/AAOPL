@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="keywords" content="AAOPL, Automated Articulated Object Parameter Learning, Robotics">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AAOPL: Automated Articulated Object Parameter Learning for Open-World Robotics</title>
+  <!-- Existing links and meta tags -->
+  <style>
+    * {
+        box-sizing: border-box; /* Include padding and borders in the width calculation */
+    }
+    body, html {
+        margin: 0;
+        padding: 0;
+        overflow-x: hidden; /* Prevents horizontal scrolling */
+    }
+    .section, .hero {
+    margin-bottom: 20px; /* Adds space between sections */
+    padding: 20px; /* Padding inside the sections */
+    background-color: #fff; /* White background for each section */
+    box-shadow: 0 0 10px #999; /* Shadow around the sections for a bounded appearance */
+    border-radius: 15px; /* Rounded corners */
+    width: 65%; /* Adjust width to match your layout needs */
+    margin: 25px auto; /* Centering the section with automatic horizontal margins */
+    }
+
+    @media (max-width: 768px) { /* Adjustments for tablets and smaller */
+        .section, .hero {
+            width: 95%; /* Wider sections on smaller screens */
+        }
+    }
+
+    .container {
+        width: 100%; /* Ensure the container takes full width */
+        max-width: 100%; /* Prevents the container from exceeding the width of its parent */
+        padding: 0; /* No padding inside the container to allow full-width sections */
+        margin: 0 auto; /* Center the container */
+    }
+
+    .footer {
+    padding: 40px 0; /* Adds vertical padding */
+    }
+    figure, .image, .image-caption {
+        width: 100%;
+        max-width: 100%; /* Prevents any element from exceeding the screen width */
+    }
+    .image-caption {
+        font-size: 3.5vw; /* Responsive font size appropriate for most devices */
+        padding: 10px;
+        text-align: center;
+        line-height: 1.2;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    @media (max-width: 400px) {
+        .image-caption {
+            font-size: 5vw; /* Smaller font size for smaller devices */
+            padding: 5px;
+        }
+    }
+    .footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+    width: 100%;
+  }
+
+  .footer .container {
+      text-align: center;
+  }
+
+  .footer .columns {
+      justify-content: center;
+      text-align: center;
+  }
+
+  .footer .content, .footer .column {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+  }
+  .image-caption {
+        font-size: calc(11.5px + 0.28vw); /* Ensures a minimum of 16px font size while still scaling with viewport width */
+  }
+</style>
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <!-- /* repeating here because some setting get run over */ -->
+  <style>
+  .image-caption {
+    font-size: calc(11.5px + 0.28vw); /* Ensures a minimum of 16px font size while still scaling with viewport width */
+  }
+  .table.is-hoverable tr:hover {
+        background-color: #ffffff ;
+    }
+  .table.is-hoverable tr:hover {
+      background-color: #f2f2f2 !important; /* Adding !important to test overriding issues */
+  }
+</style>
+<script>
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],   
+      displayMath: [['$$', '$$'], ['\\[', '\\]']] 
+    }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+ 
+<section class="hero space-background has-text-black">
+  <div class="hero-body space-background-overlay">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title has-text-black">AAOPL: Automated Articulated Object Parameter Learning for Open-World Robotics</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Ziyang Feng, Quecheng Qiu, Silong Zhang, Jianmin Ji</span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">School of Computer Science and Technology, University of Science and Technology of China, Hefei; School of Artificial Intelligence and Data Science, University of Science and Technology of China, Hefei; Institute of Artificial Intelligence, Hefei Comprehensive National Science Center, China</span>
+          </div>
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="#"
+                  class="external-link button is-normal is-rounded is-purple">
+                  <span class="icon">
+                      <i class="fas fa-graduation-cap"></i>
+                  </span>
+                  <span>IROS 2025</span>
+                </a>
+              </span>
+            </div>
+            <br>
+            <p class="is-size-5 publication-title has-text-black">
+              We introduce AAOPL, an autonomous framework that enables real-world robots to learn articulation parameters of objects—such as rotation axes and translation directions—through direct interaction, eliminating the need for pre-collected demonstration data or simulation.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- # Method Overview -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Method Overview</h2>
+        <div class="content has-text-justified">
+          <p>
+            We introduce AAOPL, an autonomous framework that enables real-world robots to learn articulation parameters of objects—such as rotation axes and translation directions—through direct interaction, eliminating the need for pre-collected demonstration data or simulation. The framework begins by estimating initial articulation parameters using image segmentation (SAM2) and depth alignment from RGB-D input. These estimates are then iteratively refined using our Accelerated Single-Step Gradient (ASSG) algorithm, which leverages real-time execution feedback to optimize manipulation trajectories. By focusing on single-step parameter correction per interaction, AAOPL drastically reduces sample complexity and enables efficient, online adaptation in unstructured environments. This approach allows robots to manipulate diverse articulated objects with minimal prior knowledge, achieving reliable performance without being constrained to specific object categories.
+          </p>
+        </div>
+        <figure class="image" id="fig-method">
+          <!-- width = 991, height = 889 -->
+          <img src="assets/IROS_2025_Single_Step_RL-picture-1.png" class="image-spacing" style="max-width: 85%; height: auto; display: block; margin: auto;">
+          <figcaption class="center image-caption">
+            The AAOPL framework autonomously learns the articulation parameters of real-world objects. Given an initial estimate obtained from image segmentation and depth alignment, ASSG iteratively refines the articulation parameters based on execution feedback until converging on accurate manipulation trajectories.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- # ASSG Algorithm -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">ASSG Algorithm</h2>
+        <div class="content has-text-justified">
+          <p>
+            At the core of AAOPL is the Accelerated Single-Step Gradient (ASSG) algorithm, an off-policy reinforcement learning method inspired by APRG. ASSG follows an actor-critic architecture: the actor network takes initial articulation parameters $ s_0 = \{p_0, q_0\} $ and outputs a correction action $ a_t = \{p_a^t, q_a^t\} $, refining the position and orientation estimates. The refined parameters are computed as:
+          </p>
+          $$
+          \Delta p = p_0 + p_a^t, \quad \Delta q = \text{normalize}(q_0 + q_a^t)
+          $$
+          <p>
+            The critic network evaluates the expected reward of the corrected parameters using force-torque sensor feedback, trained with L2 loss on actual rewards. During training, the actor is updated via gradient ascent to maximize the critic’s predicted reward, while the critic is updated using gradient descent on temporal difference errors. Each exploration step populates a replay buffer, from which $ N $ samples are drawn to update the networks $ S = 100 $ times per episode (see figure below). To promote exploration, Ornstein-Uhlenbeck noise is added to actions and decays over time, enabling broad initial search followed by precise convergence.
+          </p>
+        </div>
+        <figure class="image" id="fig-assg">
+          <!-- width = 900, height = 719 -->
+          <img src="assets/IROS_2025_Single_Step_RL-picture-3.png" class="image-spacing" style="max-width: 80%; height: auto; display: block; margin: auto;">
+          <figcaption class="center image-caption">
+            The actor-critic architecture of ASSG. One training episode includes: (1) Select articulation parameters from the actor and convert them into an execution trajectory. (2) Receive the reward and populating the replay buffer. (3) Get training batch and update the network for S times.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- # Reward and Trajectory Design -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Reward and Trajectory Design</h2>
+        <div class="content has-text-justified">
+          <p>
+            Our reward function balances task completion and interaction smoothness, defined as:
+          </p>
+          $$
+          R = \frac{l}{L} - \alpha \cdot |F|
+          $$
+          <p>
+            where $ l $ and $ L $ are the executed and expected trajectory lengths, $ F $ is the absolute force measured at the end-effector, and $ \alpha = 0.01 $ balances the two terms. This reward encourages both full trajectory execution and low-resistance manipulation, effectively guiding the policy toward kinematically feasible and efficient motions. For action trajectory generation, given refined articulation parameters $ (p, q) $, the robot computes the end-effector pose at timestep $ t $ as:
+          </p>
+          $$
+          g_t = g_0 \cdot M(t, p, q)
+          $$
+          <p>
+            where $ g_0 \in SE(3) $ is the initial grasp pose. For rotational joints, $ M(t, p, q) $ applies angular increments $ \theta_t = t \cdot d\theta $ about the axis defined by $ p $ and $ q $. For translational joints, it applies linear displacements $ l_t = t \cdot dx $ along direction $ q $. This model-based design ensures physically consistent motion planning grounded in object kinematics.
+          </p>
+        </div>
+        <figure class="image" id="fig-reward">
+          <!-- width = 1283, height = 606 -->
+          <img src="assets/IROS_2025_Single_Step_RL-picture-9.png" class="image-spacing" style="max-width: 110%; height: auto; display: block; margin: auto;">
+          <figcaption class="center image-caption">
+            Metrics for ASSG training with different exploration-to-iteration ratio S. (a) The chart counts the number of training episodes learned to execute the full expected trajectory at different S. (b) The solid lines measure the force of the gripper in the final fully executed trajectory, and the dotted lines measure the torque of the gripper in the final fully executed trajectory.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- # Learning Performance -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Learning Performance</h2>
+        <div class="content has-text-justified">
+          <p>
+            AAOPL rapidly converges to accurate articulation parameters within approximately 80 trials, completing the learning process in under 30 minutes. As shown in the figure below, early iterations exhibit poor grasp alignment, resulting in gripper slippage and high force-torque readings (red region). Over time, the system refines its parameter estimates using execution feedback, leading to increased trajectory execution completeness $ \eta $ and reduced mean end-effector force and torque (green region). By the end of training, AAOPL achieves $ \eta = 1 $, indicating full and stable trajectory execution with minimal resistance. This demonstrates the system’s ability to transform noisy initial perception into robust, low-force manipulation policies through iterative real-world interaction.
+          </p>
+        </div>
+        <figure class="image" id="fig-performance">
+          <!-- width = 1226, height = 700 -->
+          <img src="assets/IROS_2025_Single_Step_RL-picture-7.png" class="image-spacing" style="max-width: 100%; height: auto; margin-top: 24px; margin-bottom: 24px; display: block; margin-left: auto; margin-right: auto;">
+          <figcaption class="center image-caption">
+            The training process of AAOPL learning to open cabinet door. (a) The different grasping situations of the gripper during the process of opening the cabinet door in the early (left) and convergence (right) stages of learning. (b) Mean statistics of the 6-axis force-torque sensor readings during the learning process. The green region shows the reduction in force on the gripper after learning convergence compared to the red region.
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- # Comparison and Ablation -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Comparison and Ablation</h2>
+        <div class="content has-text-justified">
+          <p>
+            AAOPL outperforms state-of-the-art baselines across six articulated object tasks (cabinet, laptop, drawer, refrigerator, microwave, storage box) under both standard and abnormal conditions. Compared to ACT—a demonstration-based end-to-end method—AAOPL shows superior robustness, especially when grasp poses are perturbed, where ACT fails in cabinet and microwave tasks. In contrast to RPMArt, which relies on simulation-trained models, AAOPL adapts online and avoids sim-to-real transfer issues, achieving higher task completion and significantly lower manipulation forces. Ablation studies confirm key design choices: (1) the reward coefficient $ \alpha $ balances convergence speed and force efficiency, with $ \alpha = 0.01 $ yielding optimal performance; (2) the exploration-to-iteration ratio $ S $ affects learning speed and final trajectory quality, where $ S = 100 $ offers the best trade-off; and (3) AAOPL is robust to noise in initial perception, showing consistent convergence even with biased initial estimates, proving its independence from high-precision vision models.
+          </p>
+        </div>
+
+        <figure class="image" id="fig-tasks">
+          <!-- width = 2529, height = 686 -->
+          <img src="assets/IROS_2025_Single_Step_RL-picture-8.png" class="image-spacing" style="max-width: 100%; height: auto; display: block; margin: auto;">
+          <figcaption class="center image-caption">
+            Different articulated manipulation tasks. The top raw shows the basic situation of each task, while the bottom raw shows the abnormal situation that the grasp poses are changed intentionally before execution.
+          </figcaption>
+        </figure>
+
+        <figure class="image" id="fig-alpha">
+          <!-- width = 1137, height = 675 -->
+          <img src="assets/IROS_2025_Single_Step_RL-picture-11.png" class="image-spacing" style="max-width: 100%; height: auto; display: block; margin: auto;">
+          <figcaption class="center image-caption">
+            Metrics for ASSG training with different proportion $\alpha$ of force rewards. The solid lines measure the variation of trajectory execution completeness with the training episodes, and the dotted lines measure the variation of the mean force on the gripper with the training episodes. The shaded area represents the variance of the statistical value.
+          </figcaption>
+        </figure>
+
+        <figure class="image" id="fig-noise">
+          <!-- width = 966, height = 568 -->
+          <img src="assets/IROS_2025_Single_Step_RL-picture-13.png" class="image-spacing" style="max-width: 100%; height: auto; display: block; margin: auto;">
+          <figcaption class="center image-caption">
+            Metrics for ASSG training with different noise on the initial perception. The chart counts the number of training episodes learned to execute the full expected trajectory.
+          </figcaption>
+        </figure>
+
+        <figure class="image" id="table-performance">
+          <!-- width = 984, height = 943 -->
+          <img src="assets/IROS_2025_Single_Step_RL-table-1.png" class="image-spacing" style="max-width: 80%; height: auto; display: block; margin: auto;">
+          <figcaption class="center image-caption">
+            PERFORMANCE OF OUR APPROACH AND BASELINE
+          </figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <figure class="image">
+      <!-- width = 923, height = 266  -->
+      <img src="assets/IROS_2025_Single_Step_RL-table-1.png" style="max-width: 75%; height: auto; display: block; margin: auto;">
+    </figure>
+    <pre><code>@inproceedings{
+      feng2025aopl,
+      title={AAOPL: Automated Articulated Object Parameter Learning for Open-World Robotics},
+      author={Ziyang Feng and Quecheng Qiu and Silong Zhang and Jianmin Ji},
+      booktitle={International Conference on Intelligent Robots and Systems (IROS)},
+      year={2025},
+      }
+  </code></pre>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a 
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">
+              Creative Commons Attribution-ShareAlike 4.0 International License.
+            </a> 
+            The website template is from the 
+            <a href="https://github.com/nerfies/nerfies.github.io">
+              Nerfies
+            </a> 
+            project page.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
